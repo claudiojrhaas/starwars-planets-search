@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react';
 import Context from './Context';
 
 function Provider({ children }) {
+  const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
   const [planets, setPlanets] = useState([]);
   const [tableHeaders, setTableHeaders] = useState([]);
-  const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
+  const [filterByName, setFilterByName] = useState({ name: '' });
 
   useEffect(() => {
     async function fetchAPI() {
@@ -15,10 +16,11 @@ function Provider({ children }) {
     }
     fetchAPI();
   }, []);
+
   planets.forEach((planet) => delete planet.residents);
 
   return (
-    <Context.Provider value={ { planets, tableHeaders } }>
+    <Context.Provider value={ { planets, tableHeaders, filterByName, setFilterByName } }>
       { children }
     </Context.Provider>
   );
