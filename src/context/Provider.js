@@ -5,41 +5,50 @@ import Context from './Context';
 function Provider({ children }) {
   const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
   const [planets, setPlanets] = useState([]);
+  const [tableHeaders, setTableHeaders] = useState([]);
   const [filterByName, setFilterByName] = useState({ name: '' });
-  // const [state, setState] = useState({
-  //   filterByName: {
-  //     name: '',
-  //   }
-  // });
+  const [filterByNumericValues, setFilterByNumericValues] = useState(
+    [{
+      column: 'population',
+      comparasion: 'maior que',
+      value: 0,
+    }],
+  );
 
   useEffect(() => {
     async function fetchAPI() {
       const { results } = await fetch(endpoint).then((response) => response.json());
       setPlanets(results);
+      setTableHeaders(Object.keys(results[0]));
     }
     fetchAPI();
   }, []);
 
   planets.forEach((planet) => delete planet.residents);
+  console.log(tableHeaders);
 
   // function handleChange({ target }) {
-  //   setState({
-  //     ...state,
-  //     filterByName: {
-  //       name: target.value,
-  //     }
-  //   })
+  //   setFilterByNumericValues()
   // }
 
   return (
-    <Context.Provider value={ { planets, filterByName, setFilterByName } }>
+    <Context.Provider
+      value={ {
+        planets,
+        filterByName,
+        setFilterByName,
+        tableHeaders,
+        filterByNumericValues,
+        setFilterByNumericValues,
+      } }
+    >
       { children }
     </Context.Provider>
   );
 }
 
 Provider.propTypes = {
-  children: PropTypes.shape({}).isRequired,
+  children: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default Provider;
