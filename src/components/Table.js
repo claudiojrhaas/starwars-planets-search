@@ -9,14 +9,14 @@ function Table() {
 
   return (
     <>
-      <label htmlFor='nameFilter'>
-        { console.log(filterByName) }
+      <label htmlFor="nameFilter">
+        {/* { console.log(filterByName) } */}
         <input
-          id='nameFilter'
-          name='nameFilter'
-          type='text'
-          data-testid='name-filter'
-          placeholder='Digite o planeta'
+          id="nameFilter"
+          name="nameFilter"
+          type="search"
+          data-testid="name-filter"
+          placeholder="Digite o planeta"
           value={ filterByName.name }
           onChange={ ({ target }) => setFilterByName(target.value) }
         />
@@ -47,24 +47,24 @@ function Table() {
         <tbody>
           {
             planets
-            .filter((el) => el.name.includes(filterByName))
-            .map((planet, index) => (
-              <tr key={ index }>
-                <td>{ planet.name }</td>
-                <td>{ planet.rotation_period }</td>
-                <td>{ planet.orbital_period }</td>
-                <td>{ planet.diameter }</td>
-                <td>{ planet.climate }</td>
-                <td>{ planet.gravity }</td>
-                <td>{ planet.terrain }</td>
-                <td>{ planet.surface_water }</td>
-                <td>{ planet.population }</td>
-                <td>{ planet.films }</td>
-                <td>{ planet.created }</td>
-                <td>{ planet.edited }</td>
-                <td>{ planet.url }</td>
-              </tr>
-            ))
+              .filter((el) => el.name.includes(filterByName))
+              .map((planet, index) => (
+                <tr key={ index }>
+                  <td>{ planet.name }</td>
+                  <td>{ planet.rotation_period }</td>
+                  <td>{ planet.orbital_period }</td>
+                  <td>{ planet.diameter }</td>
+                  <td>{ planet.climate }</td>
+                  <td>{ planet.gravity }</td>
+                  <td>{ planet.terrain }</td>
+                  <td>{ planet.surface_water }</td>
+                  <td>{ planet.population }</td>
+                  <td>{ planet.films }</td>
+                  <td>{ planet.created }</td>
+                  <td>{ planet.edited }</td>
+                  <td>{ planet.url }</td>
+                </tr>
+              ))
           }
         </tbody>
       </table>
