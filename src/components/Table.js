@@ -18,17 +18,13 @@ function Table() {
           data-testid="name-filter"
           placeholder="Digite o planeta"
           value={ filterByName.name }
-          onChange={ ({ target }) => setFilterByName(target.value) }
+          onChange={ ({ target }) => setFilterByName({ name: target.value }) }
+          // onChange={ () => handleChange({ target }) }
         />
       </label>
       <table>
         <thead>
           <tr>
-            {/* {
-              tableHeaders.map((el, index) => (
-                <th key={ index }>{ el }</th>
-                ))
-              } */}
             <th>Name</th>
             <th>Rotation Period</th>
             <th>Orbital Period</th>
@@ -47,7 +43,7 @@ function Table() {
         <tbody>
           {
             planets
-              .filter((el) => el.name.includes(filterByName))
+              .filter((el) => el.name.includes(filterByName.name))
               .map((planet, index) => (
                 <tr key={ index }>
                   <td>{ planet.name }</td>
