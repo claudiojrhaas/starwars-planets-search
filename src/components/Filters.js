@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Context from '../context/Context';
 
 function Filters() {
@@ -9,8 +9,20 @@ function Filters() {
     setFilterByNumericValues,
   } = useContext(Context);
 
+  const [inputFilter, setInputFilter] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: 0,
+  });
+
+  const onClickFilterButton = () => {
+    setFilterByNumericValues([...filterByNumericValues, inputFilter]);
+  };
+
+  // console.log(inputFilter);
   return (
     <>
+      <span>{ console.log(filterByNumericValues) }</span>
       <label htmlFor="nameFilter">
         <input
           id="nameFilter"
@@ -22,15 +34,15 @@ function Filters() {
           onChange={ ({ target }) => setFilterByName({ name: target.value }) }
         />
       </label>
+
       <label htmlFor="columnFilter">
         <select
           name="columnFilter"
           id="columnFilter"
           data-testid="column-filter"
           value={ filterByNumericValues.column }
-          onChange={ ({ target }) => (
-            setFilterByNumericValues([{
-              ...filterByNumericValues, column: target.value }])) }
+          onChange={ ({ target }) => setInputFilter({
+            ...inputFilter, column: target.value }) }
         >
           <option>population</option>
           <option>orbital_period</option>
@@ -39,21 +51,22 @@ function Filters() {
           <option>surface_water</option>
         </select>
       </label>
+
       <label htmlFor="comparisonFilter">
         <select
           name="comparisonFilter"
           id="comparisonFilter"
           data-testid="comparison-filter"
           value={ filterByNumericValues.comparison }
-          onChange={ ({ target }) => (
-            setFilterByNumericValues([{
-              ...state, comparison: target.value }])) }
+          onChange={ ({ target }) => setInputFilter({
+            ...inputFilter, comparison: target.value }) }
         >
           <option>maior que</option>
           <option>menor que</option>
           <option>igual a</option>
         </select>
       </label>
+
       <label htmlFor="valueFilter">
         <input
           name="valueFilter"
@@ -62,11 +75,18 @@ function Filters() {
           placeholder="Valor"
           data-testid="value-filter"
           value={ filterByNumericValues.value }
-          onChange={ ({ target }) => (
-            setFilterByNumericValues({
-              ...filterByNumericValues, value: target.value })) }
+          onChange={ ({ target }) => setInputFilter({
+            ...inputFilter, value: target.value }) }
         />
       </label>
+
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ onClickFilterButton }
+      >
+        Filtrar
+      </button>
     </>
   );
 }

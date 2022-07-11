@@ -7,13 +7,7 @@ function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [tableHeaders, setTableHeaders] = useState([]);
   const [filterByName, setFilterByName] = useState({ name: '' });
-  const [filterByNumericValues, setFilterByNumericValues] = useState(
-    [{
-      column: 'population',
-      comparasion: 'maior que',
-      value: 0,
-    }],
-  );
+  const [filterByNumericValues, setFilterByNumericValues] = useState([]);
 
   useEffect(() => {
     async function fetchAPI() {
@@ -25,7 +19,7 @@ function Provider({ children }) {
   }, []);
 
   planets.forEach((planet) => delete planet.residents);
-  console.log(tableHeaders);
+  // console.log(tableHeaders);
 
   // function handleChange({ target }) {
   //   setFilterByNumericValues()
