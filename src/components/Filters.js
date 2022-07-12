@@ -15,14 +15,16 @@ function Filters() {
     value: 0,
   });
 
+  const COLUMN_OPTIONS = ['population', 'diameter', 'orbital_period',
+    'rotation_period', 'surface_water'];
+  const COMPARISON_OPTIONS = ['maior que', 'menor que', 'igual a'];
+
   const onClickFilterButton = () => {
     setFilterByNumericValues([...filterByNumericValues, inputFilter]);
   };
 
-  // console.log(inputFilter);
   return (
     <>
-      <span>{ console.log(filterByNumericValues) }</span>
       <label htmlFor="nameFilter">
         <input
           id="nameFilter"
@@ -40,15 +42,15 @@ function Filters() {
           name="columnFilter"
           id="columnFilter"
           data-testid="column-filter"
-          value={ filterByNumericValues.column }
+          value={ inputFilter.column }
           onChange={ ({ target }) => setInputFilter({
             ...inputFilter, column: target.value }) }
         >
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          {
+            COLUMN_OPTIONS.map((option, i) => (
+              <option key={ i } value={ option }>{ option }</option>
+            ))
+          }
         </select>
       </label>
 
@@ -57,13 +59,15 @@ function Filters() {
           name="comparisonFilter"
           id="comparisonFilter"
           data-testid="comparison-filter"
-          value={ filterByNumericValues.comparison }
+          value={ inputFilter.comparison }
           onChange={ ({ target }) => setInputFilter({
             ...inputFilter, comparison: target.value }) }
         >
-          <option>maior que</option>
-          <option>menor que</option>
-          <option>igual a</option>
+          {
+            COMPARISON_OPTIONS.map((option, i) => (
+              <option key={ i } value={ option }>{ option }</option>
+            ))
+          }
         </select>
       </label>
 
@@ -74,7 +78,7 @@ function Filters() {
           type="number"
           placeholder="Valor"
           data-testid="value-filter"
-          value={ filterByNumericValues.value }
+          value={ inputFilter.value }
           onChange={ ({ target }) => setInputFilter({
             ...inputFilter, value: target.value }) }
         />

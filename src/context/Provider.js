@@ -5,7 +5,6 @@ import Context from './Context';
 function Provider({ children }) {
   const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
   const [planets, setPlanets] = useState([]);
-  const [tableHeaders, setTableHeaders] = useState([]);
   const [filterByName, setFilterByName] = useState({ name: '' });
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
 
@@ -13,17 +12,11 @@ function Provider({ children }) {
     async function fetchAPI() {
       const { results } = await fetch(endpoint).then((response) => response.json());
       setPlanets(results);
-      setTableHeaders(Object.keys(results[0]));
     }
     fetchAPI();
   }, []);
 
   planets.forEach((planet) => delete planet.residents);
-  // console.log(tableHeaders);
-
-  // function handleChange({ target }) {
-  //   setFilterByNumericValues()
-  // }
 
   return (
     <Context.Provider
@@ -31,7 +24,6 @@ function Provider({ children }) {
         planets,
         filterByName,
         setFilterByName,
-        tableHeaders,
         filterByNumericValues,
         setFilterByNumericValues,
       } }

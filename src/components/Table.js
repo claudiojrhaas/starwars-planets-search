@@ -2,7 +2,55 @@ import React, { useContext } from 'react';
 import Context from '../context/Context';
 
 function Table() {
-  const { planets, filterByName } = useContext(Context);
+  const {
+    planets, filterByName, filterByNumericValues,
+  } = useContext(Context);
+
+  // const filterPlanets = (data) => {
+  //   if (filterByNumericValues.length) {
+  //     const filter =
+  //   }
+  // };
+
+  const filterPlanets = (data) => {
+    if (filterByNumericValues.length) {
+      console.log(filterByNumericValues);
+
+      //     filterByNumericValues.forEach((objPlanet) => {
+      //       data.filter((el) => {
+      //         console.log(objPlanet);
+      //         switch (objPlanet.comparison) {
+      //         case 'maior que':
+      //           return Number(el[objPlanet.column] > Number(objPlanet.value));
+      //         case 'menor que':
+      //           return Number(el[objPlanet.column] < Number(objPlanet.value));
+      //         case 'igual a':
+      //           return Number(el[objPlanet.column] === Number(objPlanet.value));
+      //         default: return data;
+      //         }
+      //       });
+      //     });
+      //   } return data;
+      // };
+      const objPlanet = filterByNumericValues[0];
+      // filterByNumericValues.forEach((objPlanet) => {
+      console.log(typeof objPlanet.value);
+      if (objPlanet.comparison === 'maior que') {
+        return data
+          .filter((el) => Number(el[objPlanet.column] > Number(objPlanet.value)));
+      } if (objPlanet.comparison === 'igual a') {
+        return data
+          .filter((el) => Number(el[objPlanet.column] === Number(objPlanet.value)));
+      } if (objPlanet.comparison === 'menor que') {
+        return data
+          .filter((el) => Number(el[objPlanet.column] < Number(objPlanet.value)));
+        // .filter((el) => console.log(
+        //   Number(el[objPlanet.column]), Number(objPlanet.value),
+        // ));
+      }
+      // });
+    } return data;
+  };
 
   return (
     <table>
@@ -25,8 +73,7 @@ function Table() {
       </thead>
       <tbody>
         {
-          planets
-            // .filter((col) => (col.includes(Object.keys(planets))))
+          filterPlanets(planets)
             .filter((el) => el.name.includes(filterByName.name))
             .map((planet, index) => (
               <tr key={ index }>
