@@ -6,49 +6,25 @@ function Table() {
     planets, filterByName, filterByNumericValues,
   } = useContext(Context);
 
-  // const filterPlanets = (data) => {
-  //   if (filterByNumericValues.length) {
-  //     const filter =
-  //   }
-  // };
-
   const filterPlanets = (data) => {
+    let filterData = data;
     if (filterByNumericValues.length) {
-      console.log(filterByNumericValues);
-
-      //     filterByNumericValues.forEach((objPlanet) => {
-      //       data.filter((el) => {
-      //         console.log(objPlanet);
-      //         switch (objPlanet.comparison) {
-      //         case 'maior que':
-      //           return Number(el[objPlanet.column] > Number(objPlanet.value));
-      //         case 'menor que':
-      //           return Number(el[objPlanet.column] < Number(objPlanet.value));
-      //         case 'igual a':
-      //           return Number(el[objPlanet.column] === Number(objPlanet.value));
-      //         default: return data;
-      //         }
-      //       });
-      //     });
-      //   } return data;
-      // };
-      const objPlanet = filterByNumericValues[0];
-      // filterByNumericValues.forEach((objPlanet) => {
-      console.log(typeof objPlanet.value);
-      if (objPlanet.comparison === 'maior que') {
-        return data
-          .filter((el) => Number(el[objPlanet.column] > Number(objPlanet.value)));
-      } if (objPlanet.comparison === 'igual a') {
-        return data
-          .filter((el) => Number(el[objPlanet.column] === Number(objPlanet.value)));
-      } if (objPlanet.comparison === 'menor que') {
-        return data
-          .filter((el) => Number(el[objPlanet.column] < Number(objPlanet.value)));
-        // .filter((el) => console.log(
-        //   Number(el[objPlanet.column]), Number(objPlanet.value),
-        // ));
-      }
-      // });
+      // const objPlanet = filterByNumericValues[0];
+      filterByNumericValues.forEach((objPlanet) => {
+        if (objPlanet.comparison === 'maior que') {
+          console.log('entrei');
+          filterData = data
+            .filter((el) => Number(el[objPlanet.column] > Number(objPlanet.value)));
+        } else if (objPlanet.comparison === 'menor que') {
+          console.log('entrei');
+          filterData = data
+            .filter((el) => Number(el[objPlanet.column] < Number(objPlanet.value)));
+        } else {
+          filterData = data
+            .filter((el) => el[objPlanet.column] === objPlanet.value);
+        }
+      });
+      return filterData;
     } return data;
   };
 
@@ -75,8 +51,8 @@ function Table() {
         {
           filterPlanets(planets)
             .filter((el) => el.name.includes(filterByName.name))
-            .map((planet, index) => (
-              <tr key={ index }>
+            .map((planet, i) => (
+              <tr key={ i }>
                 <td>{ planet.name }</td>
                 <td>{ planet.rotation_period }</td>
                 <td>{ planet.orbital_period }</td>
