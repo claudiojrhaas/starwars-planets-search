@@ -1,22 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Context from '../context/Context';
 
 function Table() {
   const {
-    planets, filterByName, filterByNumericValues,
+    planets, filterByName, filterByNumericValues, setPlanets,
   } = useContext(Context);
 
+  useEffect(() => {
+    setPlanets(planets);
+  }, [setPlanets, planets]);
+
   const filterPlanets = (data) => {
+    // console.log(filterByNumericValues);
     let filterData = data;
     if (filterByNumericValues.length) {
-      // const objPlanet = filterByNumericValues[0];
       filterByNumericValues.forEach((objPlanet) => {
         if (objPlanet.comparison === 'maior que') {
-          console.log('entrei');
           filterData = data
-            .filter((el) => Number(el[objPlanet.column] > Number(objPlanet.value)));
+            .filter((el) => (Number(el[objPlanet.column]) > Number(objPlanet.value)));
         } else if (objPlanet.comparison === 'menor que') {
-          console.log('entrei');
           filterData = data
             .filter((el) => Number(el[objPlanet.column] < Number(objPlanet.value)));
         } else {
@@ -24,6 +26,7 @@ function Table() {
             .filter((el) => el[objPlanet.column] === objPlanet.value);
         }
       });
+      setPlanets(filterData);
       return filterData;
     } return data;
   };

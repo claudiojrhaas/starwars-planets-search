@@ -7,6 +7,8 @@ function Filters() {
     setFilterByName,
     filterByNumericValues,
     setFilterByNumericValues,
+    columnOptions,
+    comparisonOptions,
   } = useContext(Context);
 
   const [inputFilter, setInputFilter] = useState({
@@ -14,10 +16,6 @@ function Filters() {
     comparison: 'maior que',
     value: 0,
   });
-
-  const COLUMN_OPTIONS = ['population', 'diameter', 'orbital_period',
-    'rotation_period', 'surface_water'];
-  const COMPARISON_OPTIONS = ['maior que', 'menor que', 'igual a'];
 
   const onClickFilterButton = () => {
     setFilterByNumericValues([...filterByNumericValues, inputFilter]);
@@ -47,7 +45,7 @@ function Filters() {
             ...inputFilter, column: target.value }) }
         >
           {
-            COLUMN_OPTIONS.map((option, i) => (
+            columnOptions.map((option, i) => (
               <option key={ i } value={ option }>{ option }</option>
             ))
           }
@@ -64,7 +62,7 @@ function Filters() {
             ...inputFilter, comparison: target.value }) }
         >
           {
-            COMPARISON_OPTIONS.map((option, i) => (
+            comparisonOptions.map((option, i) => (
               <option key={ i } value={ option }>{ option }</option>
             ))
           }
