@@ -7,8 +7,10 @@ function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filterByName, setFilterByName] = useState({ name: '' });
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
-  const [columnOptions, setColumnOptions] = useState([]);
-  const [comparisonOptions, setComparisonOptions] = useState([]);
+  const [columnOptions, setColumnOptions] = useState(['population', 'diameter',
+    'orbital_period', 'rotation_period', 'surface_water']);
+  const [comparisonOptions, setComparisonOptions] = useState(['maior que',
+    'menor que', 'igual a']);
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -17,9 +19,6 @@ function Provider({ children }) {
       setPlanets(results);
     }
     fetchAPI();
-    setColumnOptions(['population', 'diameter', 'orbital_period',
-      'rotation_period', 'surface_water']);
-    setComparisonOptions(['maior que', 'menor que', 'igual a']);
   }, []);
 
   planets.forEach((planet) => delete planet.residents);
@@ -37,6 +36,8 @@ function Provider({ children }) {
         setData,
         data,
         setPlanets,
+        setColumnOptions,
+        setComparisonOptions,
       } }
     >
       { children }

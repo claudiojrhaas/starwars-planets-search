@@ -9,6 +9,7 @@ function Filters() {
     setFilterByNumericValues,
     columnOptions,
     comparisonOptions,
+    setColumnOptions,
   } = useContext(Context);
 
   const [inputFilter, setInputFilter] = useState({
@@ -17,8 +18,27 @@ function Filters() {
     value: 0,
   });
 
+  // useEffect(() => {
+  //   setColumnOptions(columnOptions);
+  // }, [setColumnOptions, filterByNumericValues, columnOptions]);
+
+  const removeColumnOption = () => {
+    // const UM = -1;
+    const a = columnOptions.filter((i) => (filterByNumericValues
+      .find((el) => (i !== el.column))));
+    console.log(a);
+    setColumnOptions(a);
+    // if (index !== UM && columnOptions.splice(index, 1));
+    // console.log(columnOptions);
+  };
+
   const onClickFilterButton = () => {
-    setFilterByNumericValues([...filterByNumericValues, inputFilter]);
+    removeColumnOption();
+    // setInputFilter({
+    //   ...inputFilter, id: inputFilter.id + 1 });
+    setFilterByNumericValues(
+      [...filterByNumericValues, inputFilter],
+    );
   };
 
   return (
@@ -89,6 +109,13 @@ function Filters() {
       >
         Filtrar
       </button>
+      {
+        filterByNumericValues.map((el, i) => (
+          <div key={ i }>
+            { `${el.column} ${el.comparison} ${el.value}` }
+          </div>
+        ))
+      }
     </>
   );
 }
