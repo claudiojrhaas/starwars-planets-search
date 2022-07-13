@@ -22,42 +22,33 @@ function Filters() {
   const [inputComparison, setInputComparison] = useState('maior que');
   const [inputValue, setInputValue] = useState(0);
 
-  // useEffect(() => {
-  //   setColumnOptions(columnOptions);
-  // }, [setColumnOptions, columnOptions]);
-
   const removeColumnOption = () => {
-    // console.log(inputFilter);
-    // console.log(columnOptions);
-    // console.log(filterByNumericValues);
-    // const UM = -1;
-    // const filterColumn = filterByNumericValues.filter((i) => (
-    //   !i.column.includes(columnOptions) ? i.column : false));
     const filterColumn = columnOptions.filter((i) => (inputColumn !== i));
-    // console.log(filterColumn);
+    filterColumn.reverse();
+    console.log(filterColumn);
     setColumnOptions(filterColumn);
-
-    // if (index !== UM && columnOptions.splice(index, 1));
-    // console.log(columnOptions);
   };
 
-  // const onChangeColumn = (target) => {
-  //   setInputColumn(target.value);
-  //   console.log(target.value);
+  // const onClickFilterButton = () => {
+  //   console.log(inputColumn, inputComparison, inputValue);
+  //   removeColumnOption();
+  //   // setInputFilter({
+  //   //   ...inputFilter, id: inputFilter.id + 1 });
+  //   // setFilterByNumericValues(
+  //   //   [...filterByNumericValues, inputFilter],
+  //   // );
+  //   setFilterByNumericValues((prev) => (
+  //     [...prev, { column: inputColumn, comparison: inputComparison, value: inputValue }]
+  //   ));
+  //   console.log(filterByNumericValues);
   // };
 
   const onClickFilterButton = () => {
-    console.log(inputColumn, inputComparison, inputValue);
     removeColumnOption();
-    // setInputFilter({
-    //   ...inputFilter, id: inputFilter.id + 1 });
-    // setFilterByNumericValues(
-    //   [...filterByNumericValues, inputFilter],
-    // );
     setFilterByNumericValues((prev) => (
       [...prev, { column: inputColumn, comparison: inputComparison, value: inputValue }]
     ));
-    console.log(filterByNumericValues);
+    setInputColumn(columnOptions[0]);
   };
 
   return (
