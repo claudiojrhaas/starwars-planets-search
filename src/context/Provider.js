@@ -23,6 +23,17 @@ function Provider({ children }) {
 
   planets.forEach((planet) => delete planet.residents);
 
+  // const removeColumnOption = () => {
+  //   console.log(columnOptions);
+  //   // const UM = -1;
+  //   const filterColumn = columnOptions.filter((i) => (filterByNumericValues
+  //     .find((el) => (i !== el.column))));
+  //   console.log(filterColumn);
+  //   setColumnOptions(filterColumn);
+  //   // if (index !== UM && columnOptions.splice(index, 1));
+  //   // console.log(columnOptions);
+  // };
+
   return (
     <Context.Provider
       value={ {

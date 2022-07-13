@@ -20,14 +20,19 @@ function Filters() {
 
   // useEffect(() => {
   //   setColumnOptions(columnOptions);
-  // }, [setColumnOptions, filterByNumericValues, columnOptions]);
+  // }, [setColumnOptions, columnOptions]);
 
   const removeColumnOption = () => {
+    console.log(inputFilter);
+    // console.log(columnOptions);
+    // console.log(filterByNumericValues);
     // const UM = -1;
-    const a = columnOptions.filter((i) => (filterByNumericValues
-      .find((el) => (i !== el.column))));
-    console.log(a);
-    setColumnOptions(a);
+    // const filterColumn = filterByNumericValues.filter((i) => (
+    //   !i.column.includes(columnOptions) ? i.column : false));
+    const filterColumn = columnOptions.filter((i) => (inputFilter.column !== i));
+    console.log(filterColumn);
+    setColumnOptions(filterColumn);
+
     // if (index !== UM && columnOptions.splice(index, 1));
     // console.log(columnOptions);
   };

@@ -3,7 +3,10 @@ import Context from '../context/Context';
 
 function Table() {
   const {
-    planets, filterByName, filterByNumericValues, setPlanets,
+    planets,
+    filterByName,
+    filterByNumericValues,
+    setPlanets,
   } = useContext(Context);
 
   // useEffect(() => {
@@ -34,6 +37,7 @@ function Table() {
         }
       });
       setPlanets(filterData);
+      // removeColumnOption();
       return filterData;
     } return planets;
   };
