@@ -12,38 +12,52 @@ function Filters() {
     setColumnOptions,
   } = useContext(Context);
 
-  const [inputFilter, setInputFilter] = useState({
-    column: 'population',
-    comparison: 'maior que',
-    value: 0,
-  });
+  // const [inputFilter, setInputFilter] = useState({
+  //   column: 'population',
+  //   comparison: 'maior que',
+  //   value: 0,
+  // });
+
+  const [inputColumn, setInputColumn] = useState('population');
+  const [inputComparison, setInputComparison] = useState('maior que');
+  const [inputValue, setInputValue] = useState(0);
 
   // useEffect(() => {
   //   setColumnOptions(columnOptions);
   // }, [setColumnOptions, columnOptions]);
 
   const removeColumnOption = () => {
-    console.log(inputFilter);
+    // console.log(inputFilter);
     // console.log(columnOptions);
     // console.log(filterByNumericValues);
     // const UM = -1;
     // const filterColumn = filterByNumericValues.filter((i) => (
     //   !i.column.includes(columnOptions) ? i.column : false));
-    const filterColumn = columnOptions.filter((i) => (inputFilter.column !== i));
-    console.log(filterColumn);
+    const filterColumn = columnOptions.filter((i) => (inputColumn !== i));
+    // console.log(filterColumn);
     setColumnOptions(filterColumn);
 
     // if (index !== UM && columnOptions.splice(index, 1));
     // console.log(columnOptions);
   };
 
+  // const onChangeColumn = (target) => {
+  //   setInputColumn(target.value);
+  //   console.log(target.value);
+  // };
+
   const onClickFilterButton = () => {
+    console.log(inputColumn, inputComparison, inputValue);
     removeColumnOption();
     // setInputFilter({
     //   ...inputFilter, id: inputFilter.id + 1 });
-    setFilterByNumericValues(
-      [...filterByNumericValues, inputFilter],
-    );
+    // setFilterByNumericValues(
+    //   [...filterByNumericValues, inputFilter],
+    // );
+    setFilterByNumericValues((prev) => (
+      [...prev, { column: inputColumn, comparison: inputComparison, value: inputValue }]
+    ));
+    console.log(filterByNumericValues);
   };
 
   return (
@@ -65,13 +79,12 @@ function Filters() {
           name="columnFilter"
           id="columnFilter"
           data-testid="column-filter"
-          value={ inputFilter.column }
-          onChange={ ({ target }) => setInputFilter({
-            ...inputFilter, column: target.value }) }
+          value={ inputColumn }
+          onChange={ ({ target }) => setInputColumn(target.value) }
         >
           {
             columnOptions.map((option, i) => (
-              <option key={ i } value={ option }>{ option }</option>
+              <option key={ i }>{ option }</option>
             ))
           }
         </select>
@@ -82,9 +95,8 @@ function Filters() {
           name="comparisonFilter"
           id="comparisonFilter"
           data-testid="comparison-filter"
-          value={ inputFilter.comparison }
-          onChange={ ({ target }) => setInputFilter({
-            ...inputFilter, comparison: target.value }) }
+          value={ inputComparison }
+          onChange={ ({ target }) => setInputComparison(target.value) }
         >
           {
             comparisonOptions.map((option, i) => (
@@ -101,9 +113,8 @@ function Filters() {
           type="number"
           placeholder="Valor"
           data-testid="value-filter"
-          value={ inputFilter.value }
-          onChange={ ({ target }) => setInputFilter({
-            ...inputFilter, value: target.value }) }
+          value={ inputValue }
+          onChange={ ({ target }) => setInputValue(target.value) }
         />
       </label>
 

@@ -9,37 +9,31 @@ function Table() {
     setPlanets,
   } = useContext(Context);
 
-  // useEffect(() => {
-  //   setPlanets(planets);
-  //   console.log(planets);
-  // }, [setPlanets, planets]);
-
   useEffect(() => {
     setPlanets(planets);
     // console.log(planets);
   }, [setPlanets, planets]);
 
-  const filterPlanets = () => {
+  const filterPlanets = (data) => {
     // console.log(planets);
     // console.log(filterByNumericValues);
-    let filterData = [...planets];
+    let filterData = data;
     if (filterByNumericValues.length) {
       filterByNumericValues.forEach((objPlanet) => {
         if (objPlanet.comparison === 'maior que') {
-          filterData = planets
+          filterData = data
             .filter((el) => (Number(el[objPlanet.column]) > Number(objPlanet.value)));
         } else if (objPlanet.comparison === 'menor que') {
-          filterData = planets
+          filterData = data
             .filter((el) => Number(el[objPlanet.column] < Number(objPlanet.value)));
         } else {
-          filterData = planets
+          filterData = data
             .filter((el) => el[objPlanet.column] === objPlanet.value);
         }
       });
       setPlanets(filterData);
-      // removeColumnOption();
       return filterData;
-    } return planets;
+    } return data;
   };
 
   return (
@@ -63,8 +57,7 @@ function Table() {
       </thead>
       <tbody>
         {
-          planets
-          && filterPlanets()
+          filterPlanets(planets)
             .filter((el) => el.name.includes(filterByName.name))
             .map((planet, i) => (
               <tr key={ i }>
