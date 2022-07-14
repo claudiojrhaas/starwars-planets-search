@@ -12,43 +12,42 @@ function Filters() {
     setColumnOptions,
   } = useContext(Context);
 
-  // const [inputFilter, setInputFilter] = useState({
-  //   column: 'population',
-  //   comparison: 'maior que',
-  //   value: 0,
-  // });
-
   const [inputColumn, setInputColumn] = useState('population');
   const [inputComparison, setInputComparison] = useState('maior que');
   const [inputValue, setInputValue] = useState(0);
+  const [inputId, setInputId] = useState(0);
 
   const removeColumnOption = () => {
     const filterColumn = columnOptions.filter((i) => (inputColumn !== i));
-    filterColumn.reverse();
-    console.log(filterColumn);
     setColumnOptions(filterColumn);
   };
 
-  // const onClickFilterButton = () => {
-  //   console.log(inputColumn, inputComparison, inputValue);
-  //   removeColumnOption();
-  //   // setInputFilter({
-  //   //   ...inputFilter, id: inputFilter.id + 1 });
-  //   // setFilterByNumericValues(
-  //   //   [...filterByNumericValues, inputFilter],
-  //   // );
-  //   setFilterByNumericValues((prev) => (
-  //     [...prev, { column: inputColumn, comparison: inputComparison, value: inputValue }]
-  //   ));
-  //   console.log(filterByNumericValues);
-  // };
-
   const onClickFilterButton = () => {
     removeColumnOption();
+    setInputId(inputId + 1);
     setFilterByNumericValues((prev) => (
-      [...prev, { column: inputColumn, comparison: inputComparison, value: inputValue }]
+      [...prev, {
+        column: inputColumn,
+        comparison: inputComparison,
+        value: inputValue,
+        id: inputId,
+      }]
     ));
     setInputColumn(columnOptions[0]);
+  };
+
+  const onClickDeleteSingleValue = (id, column) => {
+    const filterArr = filterByNumericValues.filter((el) => el.id !== id);
+    setFilterByNumericValues(filterArr);
+    const newColumnOptions = columnOptions.concat(column);
+    // console.log(newColumnOptions);
+    setColumnOptions(newColumnOptions);
+  };
+
+  const onClickDeleteAllValues = () => {
+    setFilterByNumericValues([]);
+    setColumnOptions(['population', 'diameter',
+      'orbital_period', 'rotation_period', 'surface_water']);
   };
 
   return (
@@ -116,10 +115,30 @@ function Filters() {
       >
         Filtrar
       </button>
+      <button
+        type="button"
+        data-testid="button-remove-filters"
+        onClick={ onClickDeleteAllValues }
+      >
+        Remover todas filtragens
+      </button>
       {
-        filterByNumericValues.map((el, i) => (
-          <div key={ i }>
-            { `${el.column} ${el.comparison} ${el.value}` }
+        filterByNumericValues.map((el) => (
+          <div key={ el.id }>
+            <span>
+              { el.column }
+              {' '}
+              { el.comparison }
+              {' '}
+              { el.value }
+              {' '}
+            </span>
+            <button
+              type="button"
+              onClick={ () => onClickDeleteSingleValue(el.id, el.column) }
+            >
+              X
+            </button>
           </div>
         ))
       }
