@@ -9,32 +9,33 @@ function Table() {
     setPlanets,
   } = useContext(Context);
 
-  useEffect(() => {
-    setPlanets(planets);
-    // console.log(planets);
-  }, [setPlanets, planets]);
-
-  const filterPlanets = (data) => {
+  const filterPlanets = (dataPlanets) => {
     // console.log(planets);
     // console.log(filterByNumericValues);
-    let filterData = data;
+    let filterData = dataPlanets;
     if (filterByNumericValues.length) {
       filterByNumericValues.forEach((objPlanet) => {
         if (objPlanet.comparison === 'maior que') {
-          filterData = data
+          filterData = dataPlanets
             .filter((el) => (Number(el[objPlanet.column]) > Number(objPlanet.value)));
         } else if (objPlanet.comparison === 'menor que') {
-          filterData = data
+          filterData = dataPlanets
             .filter((el) => Number(el[objPlanet.column] < Number(objPlanet.value)));
         } else {
-          filterData = data
+          filterData = dataPlanets
             .filter((el) => el[objPlanet.column] === objPlanet.value);
         }
       });
       setPlanets(filterData);
       return filterData;
-    } return data;
+    } return dataPlanets;
   };
+
+  useEffect(() => {
+    setPlanets(planets);
+    // filterPlanets(planets);
+    // console.log(planets);
+  }, [setPlanets, planets]);
 
   return (
     <table>
