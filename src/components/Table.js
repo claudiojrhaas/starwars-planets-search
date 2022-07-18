@@ -5,7 +5,7 @@ function Table() {
   const {
     // planets,
     filterByName,
-    filterPlanets,
+    data,
   } = useContext(Context);
 
   // const filterPlanets = (dataPlanets) => {
@@ -57,7 +57,7 @@ function Table() {
       </thead>
       <tbody>
         {
-          filterPlanets()
+          data
             .filter((el) => el.name.includes(filterByName.name))
             .map((planet, i) => (
               <tr key={ i }>

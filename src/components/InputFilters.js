@@ -14,7 +14,7 @@ function InputFilters() {
     // planets,
   } = useContext(Context);
 
-  const [inputColumn, setInputColumn] = useState('');
+  const [inputColumn, setInputColumn] = useState('population');
   const [inputComparison, setInputComparison] = useState('maior que');
   const [inputValue, setInputValue] = useState(0);
   const [inputId, setInputId] = useState(0);

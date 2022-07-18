@@ -12,6 +12,7 @@ function Provider({ children }) {
   const [comparisonOptions, setComparisonOptions] = useState(['maior que',
     'menor que', 'igual a']);
   const [data, setData] = useState([]);
+  const [filterData, setFilterData] = useState([]);
 
   useEffect(() => {
     async function fetchAPI() {
@@ -22,35 +23,49 @@ function Provider({ children }) {
     fetchAPI();
   }, []);
 
-  planets.forEach((planet) => delete planet.residents);
+  data.forEach((planet) => delete planet.residents);
 
-  const filterPlanets = () => {
-    // console.log(planets);
-    // console.log(filterByNumericValues);
-    let filterData = [...data];
-    if (filterByNumericValues.length) {
-      filterByNumericValues.forEach((objPlanet) => {
-        if (objPlanet.comparison === 'maior que') {
-          filterData = data
-            .filter((el) => (Number(el[objPlanet.column]) > Number(objPlanet.value)));
-        } else if (objPlanet.comparison === 'menor que') {
-          filterData = data
-            .filter((el) => Number(el[objPlanet.column] < Number(objPlanet.value)));
-        } else {
-          filterData = data
-            .filter((el) => el[objPlanet.column] === objPlanet.value);
-        }
-      });
-      setPlanets(filterData);
-      return filterData;
-    } return data;
-  };
+  // const filterPlanets = () => {
+  //   // console.log(planets);
+  //   // console.log(filterByNumericValues);
+  //   let filterData = [...data];
+  //   if (filterByNumericValues.length) {
+  //     filterByNumericValues.forEach((objPlanet) => {
+  //       if (objPlanet.comparison === 'maior que') {
+  //         filterData = data
+  //           .filter((el) => (Number(el[objPlanet.column]) > Number(objPlanet.value)));
+  //       } else if (objPlanet.comparison === 'menor que') {
+  //         filterData = data
+  //           .filter((el) => Number(el[objPlanet.column] < Number(objPlanet.value)));
+  //       } else {
+  //         filterData = data
+  //           .filter((el) => el[objPlanet.column] === objPlanet.value);
+  //       }
+  //     });
+  //     setPlanets(filterData);
+  //     return filterData;
+  //   } return data;
+  // };
 
   useEffect(() => {
-    setPlanets(planets);
-    // filterPlanets(planets);
-    // console.log(planets);
-  }, [setPlanets, planets]);
+    // if (filterByNumericValues.length) {
+    const filterPlanets = () => {
+      filterByNumericValues.forEach((objPlanet) => {
+        if (objPlanet.comparison === 'maior que') {
+          setFilterData(data
+            .filter((el) => (Number(el[objPlanet.column]) > Number(objPlanet.value))));
+        } if (objPlanet.comparison === 'menor que') {
+          setFilterData(data
+            .filter((el) => Number(el[objPlanet.column] < Number(objPlanet.value))));
+        } if (objPlanet.comparison === 'igual a') {
+          setFilterData(data
+            .filter((el) => el[objPlanet.column] === objPlanet.value));
+        }
+      });
+    };
+    filterPlanets();
+    // } return data;
+  }, [filterByNumericValues]);
 
   return (
     <Context.Provider
@@ -67,7 +82,7 @@ function Provider({ children }) {
         setPlanets,
         setColumnOptions,
         setComparisonOptions,
-        filterPlanets,
+        filterData,
       } }
     >
       { children }
