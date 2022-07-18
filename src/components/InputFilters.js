@@ -10,9 +10,11 @@ function InputFilters() {
     columnOptions,
     comparisonOptions,
     setColumnOptions,
+    // setPlanets,
+    // planets,
   } = useContext(Context);
 
-  const [inputColumn, setInputColumn] = useState('population');
+  const [inputColumn, setInputColumn] = useState('');
   const [inputComparison, setInputComparison] = useState('maior que');
   const [inputValue, setInputValue] = useState(0);
   const [inputId, setInputId] = useState(0);
@@ -42,12 +44,19 @@ function InputFilters() {
     const newColumnOptions = columnOptions.concat(column);
     setColumnOptions(newColumnOptions);
     setInputColumn(columnOptions[0]);
+    setPlanets(planets);
   };
 
   const onClickDeleteAllValues = () => {
     setFilterByNumericValues([]);
     setColumnOptions(['population', 'diameter',
       'orbital_period', 'rotation_period', 'surface_water']);
+    // setPlanets(planets);
+  };
+
+  const onChangeColumnFilter = (target) => {
+    setInputColumn(columnOptions[0]);
+    setInputColumn(target.value);
   };
 
   return (
@@ -70,7 +79,7 @@ function InputFilters() {
           id="columnFilter"
           data-testid="column-filter"
           value={ inputColumn }
-          onChange={ ({ target }) => setInputColumn(target.value) }
+          onChange={ ({ target }) => onChangeColumnFilter(target) }
         >
           {
             columnOptions.map((option, i) => (

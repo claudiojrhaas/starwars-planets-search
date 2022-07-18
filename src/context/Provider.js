@@ -16,6 +16,7 @@ function Provider({ children }) {
   useEffect(() => {
     async function fetchAPI() {
       const { results } = await fetch(endpoint).then((response) => response.json());
+      setData(results);
       setPlanets(results);
     }
     fetchAPI();
@@ -23,16 +24,33 @@ function Provider({ children }) {
 
   planets.forEach((planet) => delete planet.residents);
 
-  // const removeColumnOption = () => {
-  //   console.log(columnOptions);
-  //   // const UM = -1;
-  //   const filterColumn = columnOptions.filter((i) => (filterByNumericValues
-  //     .find((el) => (i !== el.column))));
-  //   console.log(filterColumn);
-  //   setColumnOptions(filterColumn);
-  //   // if (index !== UM && columnOptions.splice(index, 1));
-  //   // console.log(columnOptions);
-  // };
+  const filterPlanets = () => {
+    // console.log(planets);
+    // console.log(filterByNumericValues);
+    let filterData = [...data];
+    if (filterByNumericValues.length) {
+      filterByNumericValues.forEach((objPlanet) => {
+        if (objPlanet.comparison === 'maior que') {
+          filterData = data
+            .filter((el) => (Number(el[objPlanet.column]) > Number(objPlanet.value)));
+        } else if (objPlanet.comparison === 'menor que') {
+          filterData = data
+            .filter((el) => Number(el[objPlanet.column] < Number(objPlanet.value)));
+        } else {
+          filterData = data
+            .filter((el) => el[objPlanet.column] === objPlanet.value);
+        }
+      });
+      setPlanets(filterData);
+      return filterData;
+    } return data;
+  };
+
+  useEffect(() => {
+    setPlanets(planets);
+    // filterPlanets(planets);
+    // console.log(planets);
+  }, [setPlanets, planets]);
 
   return (
     <Context.Provider
@@ -49,6 +67,7 @@ function Provider({ children }) {
         setPlanets,
         setColumnOptions,
         setComparisonOptions,
+        filterPlanets,
       } }
     >
       { children }
