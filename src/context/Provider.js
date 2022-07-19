@@ -12,7 +12,7 @@ function Provider({ children }) {
   const [comparisonOptions, setComparisonOptions] = useState(['maior que',
     'menor que', 'igual a']);
   const [data, setData] = useState([]);
-  const [filterData, setFilterData] = useState([]);
+  // const [filterData, setFilterData] = useState([]);
 
   useEffect(() => {
     async function fetchAPI() {
@@ -47,25 +47,25 @@ function Provider({ children }) {
   //   } return data;
   // };
 
-  useEffect(() => {
-    // if (filterByNumericValues.length) {
-    const filterPlanets = () => {
-      filterByNumericValues.forEach((objPlanet) => {
-        if (objPlanet.comparison === 'maior que') {
-          setFilterData(data
-            .filter((el) => (Number(el[objPlanet.column]) > Number(objPlanet.value))));
-        } if (objPlanet.comparison === 'menor que') {
-          setFilterData(data
-            .filter((el) => Number(el[objPlanet.column] < Number(objPlanet.value))));
-        } if (objPlanet.comparison === 'igual a') {
-          setFilterData(data
-            .filter((el) => el[objPlanet.column] === objPlanet.value));
-        }
-      });
-    };
-    filterPlanets();
-    // } return data;
-  }, [filterByNumericValues]);
+  // useEffect(() => {
+  //   // if (filterByNumericValues.length) {
+  //   const filterPlanets = () => {
+  //     filterByNumericValues.forEach((objPlanet) => {
+  //       if (objPlanet.comparison === 'maior que') {
+  //         setFilterData(data
+  //           .filter((el) => (Number(el[objPlanet.column]) > Number(objPlanet.value))));
+  //       } if (objPlanet.comparison === 'menor que') {
+  //         setFilterData(data
+  //           .filter((el) => Number(el[objPlanet.column] < Number(objPlanet.value))));
+  //       } if (objPlanet.comparison === 'igual a') {
+  //         setFilterData(data
+  //           .filter((el) => el[objPlanet.column] === objPlanet.value));
+  //       }
+  //     });
+  //   };
+  //   filterPlanets();
+  //   // } return data;
+  // }, [filterByNumericValues]);
 
   return (
     <Context.Provider
@@ -82,7 +82,7 @@ function Provider({ children }) {
         setPlanets,
         setColumnOptions,
         setComparisonOptions,
-        filterData,
+        // filterData,
       } }
     >
       { children }

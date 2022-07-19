@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Context from '../context/Context';
 
-function InputFilters() {
+function Filters() {
   const {
     filterByName,
     setFilterByName,
@@ -39,12 +39,11 @@ function InputFilters() {
   };
 
   const onClickDeleteSingleValue = (id, column) => {
-    const filterArrId = filterByNumericValues.filter((el) => el.id !== id);
-    setFilterByNumericValues(filterArrId);
+    const filterArr = filterByNumericValues.filter((el) => el.id !== id);
+    setFilterByNumericValues(filterArr);
     const newColumnOptions = columnOptions.concat(column);
+    // console.log(newColumnOptions);
     setColumnOptions(newColumnOptions);
-    setInputColumn(columnOptions[0]);
-    setPlanets(planets);
   };
 
   const onClickDeleteAllValues = () => {
@@ -134,7 +133,7 @@ function InputFilters() {
       {
         filterByNumericValues.map((el) => (
           <div key={ el.id }>
-            <p data-testid="filter">
+            <span data-testid="filter">
               { el.column }
               {' '}
               { el.comparison }
@@ -147,7 +146,7 @@ function InputFilters() {
               >
                 X
               </button>
-            </p>
+            </span>
           </div>
         ))
       }
@@ -155,4 +154,4 @@ function InputFilters() {
   );
 }
 
-export default InputFilters;
+export default Filters;

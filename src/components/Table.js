@@ -1,40 +1,41 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Context from '../context/Context';
 
 function Table() {
   const {
-    // planets,
+    planets,
     filterByName,
+    setPlanets,
     data,
+    filterByNumericValues,
   } = useContext(Context);
 
-  // const filterPlanets = (dataPlanets) => {
-  //   // console.log(planets);
-  //   // console.log(filterByNumericValues);
-  //   let filterData = dataPlanets;
-  //   if (filterByNumericValues.length) {
-  //     filterByNumericValues.forEach((objPlanet) => {
-  //       if (objPlanet.comparison === 'maior que') {
-  //         filterData = dataPlanets
-  //           .filter((el) => (Number(el[objPlanet.column]) > Number(objPlanet.value)));
-  //       } else if (objPlanet.comparison === 'menor que') {
-  //         filterData = dataPlanets
-  //           .filter((el) => Number(el[objPlanet.column] < Number(objPlanet.value)));
-  //       } else {
-  //         filterData = dataPlanets
-  //           .filter((el) => el[objPlanet.column] === objPlanet.value);
-  //       }
-  //     });
-  //     setPlanets(filterData);
-  //     return filterData;
-  //   } return dataPlanets;
-  // };
+  useEffect(() => {
+    setPlanets(planets);
+    // console.log(planets);
+  }, [setPlanets, planets]);
 
-  // useEffect(() => {
-  //   setPlanets(planets);
-  //   // filterPlanets(planets);
-  //   // console.log(planets);
-  // }, [setPlanets, planets]);
+  const filterPlanets = () => {
+    // console.log(planets);
+    // console.log(filterByNumericValues);
+    let filterData = data;
+    if (filterByNumericValues.length) {
+      filterByNumericValues.forEach((objPlanet) => {
+        if (objPlanet.comparison === 'maior que') {
+          filterData = filterData
+            .filter((el) => (Number(el[objPlanet.column]) > Number(objPlanet.value)));
+        } else if (objPlanet.comparison === 'menor que') {
+          filterData = filterData
+            .filter((el) => Number(el[objPlanet.column] < Number(objPlanet.value)));
+        } else {
+          filterData = filterData
+            .filter((el) => el[objPlanet.column] === objPlanet.value);
+        }
+      });
+      setPlanets(filterData);
+      return filterData;
+    } return data;
+  };
 
   return (
     <table>
@@ -57,7 +58,7 @@ function Table() {
       </thead>
       <tbody>
         {
-          data
+          filterPlanets()
             .filter((el) => el.name.includes(filterByName.name))
             .map((planet, i) => (
               <tr key={ i }>
